@@ -143,6 +143,7 @@ main {
 }
 
 .poems { display: grid; gap: 16px; }
+.poems .poem { width: 75%; justify-self: center; }
 
 .poem {
   background: rgba(255, 255, 255, .78);
@@ -237,6 +238,7 @@ main {
   .site-header { flex-direction: column; gap: 8px; }
   .nav { justify-content: center; }
   .nav a { font-size: 13px; }
+  .poems .poem { width: 100%; }
   .history__body { grid-template-columns: 1fr; }
   .history__body img { max-width: 280px; margin: 0 auto; }
 }
