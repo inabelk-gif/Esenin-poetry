@@ -120,7 +120,7 @@ main {
   color: #18241f;
   text-shadow: 0 2px 30px rgba(255, 255, 255, .7);
 }
-.hero h1 em { font-style: italic; color: var(--accent); }
+.hero h1 em { font-style: italic; color: var(--accent); font-size: 1.5em; text-transform: uppercase; }
 /* Зелёная линия из точек между подзаголовком и «Стихотворениями» */
 .hero::after {
   content: "";
@@ -132,7 +132,7 @@ main {
   transform: translateX(-50%);
   background: radial-gradient(circle, var(--accent) 1.5px, transparent 1.6px) 0 0 / 9px 3px repeat-x;
 }
-.hero__lead { margin: 28px auto 0; max-width: 520px; font-size: 18px; color: var(--ink-soft); }
+.hero__lead { margin: 28px auto 0; max-width: 600px; font-size: clamp(19px, 1.8vw, 23px); font-weight: 700; color: var(--ink); }
 
 .section-title {
   font-family: "Cormorant Garamond", serif;
@@ -157,7 +157,8 @@ main {
 .poem h3 {
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--accent);
   font-size: clamp(26px, 3.4vw, 36px);
 }
 .poem__year { margin: 6px 0 28px; color: var(--ink-soft); letter-spacing: .2em; font-size: 13px; }
@@ -165,7 +166,7 @@ main {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: clamp(16px, 1.7vw, 19px);
-  line-height: 1.75;
+  line-height: 1.5;
 }
 .poem__text p { margin: 0 0 1.4em; }
 .poem__text p:last-child { margin-bottom: 0; }
@@ -189,7 +190,7 @@ main {
   -webkit-backdrop-filter: blur(6px);
   border-radius: 18px;
   padding: clamp(20px, 4vw, 40px);
-  line-height: 1.75;
+  line-height: 1.5;
   font-size: 17px;
 }
 .history__body img { width: 100%; border-radius: 12px; display: block; }
