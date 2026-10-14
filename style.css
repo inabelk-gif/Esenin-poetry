@@ -1,7 +1,7 @@
 :root {
-  --sky-top: #8fbde3;
-  --sky-mid: #c4def1;
-  --sky-low: #eef5f9;
+  --sky-top: #2b8be0;
+  --sky-mid: #5fb2f0;
+  --sky-low: #b4ddfa;
   --ink: #1f2a26;
   --ink-soft: #4b5a54;
   --accent: #3f6b4f;
@@ -18,14 +18,20 @@ body {
   font-family: "Open Sans", system-ui, sans-serif;
   font-weight: 300;
   color: var(--ink);
-  background:
-    radial-gradient(ellipse 60% 18% at 30% 12%, rgba(255,255,255,.75), transparent 70%),
-    radial-gradient(ellipse 45% 14% at 75% 30%, rgba(255,255,255,.6), transparent 70%),
-    radial-gradient(ellipse 55% 16% at 40% 62%, rgba(255,255,255,.55), transparent 70%),
-    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-low) 100%);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-low) 100%);
   background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* Облака */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0028 0.006' numOctaves='5' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 3.4 0 0 0 -1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E") center / cover no-repeat;
 }
 
 a { color: inherit; }
@@ -83,7 +89,7 @@ a { color: inherit; }
 .nav a {
   text-decoration: none;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: .06em;
   text-transform: uppercase;
   padding: 6px 0;
@@ -101,7 +107,7 @@ main {
   padding: 0 0 80px;
 }
 
-.hero { margin: 0 calc(50% - 50vw); text-align: center; padding: clamp(48px, 10vh, 120px) 0 clamp(40px, 8vh, 90px); }
+.hero { position: relative; margin: 0 calc(50% - 50vw); text-align: center; padding: clamp(48px, 10vh, 120px) 16px clamp(40px, 8vh, 90px); }
 .hero h1 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
@@ -113,11 +119,22 @@ main {
   text-shadow: 0 2px 30px rgba(255, 255, 255, .7);
 }
 .hero h1 em { font-style: italic; color: var(--accent); }
+/* Зелёная линия из точек между подзаголовком и «Стихотворениями» */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(360px, 70vw);
+  height: 3px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, var(--accent) 1.5px, transparent 1.6px) 0 0 / 9px 3px repeat-x;
+}
 .hero__lead { margin: 28px auto 0; max-width: 520px; font-size: 18px; color: var(--ink-soft); }
 
 .section-title {
   font-family: "Cormorant Garamond", serif;
-  font-weight: 300;
+  font-weight: 700;
   font-size: clamp(36px, 5vw, 56px);
   text-align: center;
   margin: 70px 0 32px;
