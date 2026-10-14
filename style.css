@@ -105,8 +105,8 @@ main {
 .hero h1 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-weight: 300;
-  font-size: clamp(52px, 9.5vw, 120pt);
+  font-weight: 700;
+  font-size: clamp(46px, 8vw, 100pt);
   line-height: .95;
   letter-spacing: -.01em;
   color: #18241f;
@@ -138,7 +138,7 @@ main {
 .poem h3 {
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  font-weight: 300;
+  font-weight: 600;
   font-size: clamp(26px, 3.4vw, 36px);
 }
 .poem__year { margin: 6px 0 28px; color: var(--ink-soft); letter-spacing: .2em; font-size: 13px; }

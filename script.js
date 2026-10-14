@@ -32,6 +32,7 @@
   }
 
   const swayers = [];
+  const trees = [];
 
   function drawBirch(container, seed) {
     const r = rng(seed);
@@ -44,8 +45,11 @@
       { bx: 228, tx: 280, cx: 230, w0: 22, w1: 4 }
     ];
 
-    const branchLayer = el('g', {}, svg);
-    const trunkLayer = el('g', {}, svg);
+    // Всё дерево целиком — чтобы раскачивать его вместе со стволами
+    const tree = el('g', {}, svg);
+    trees.push({ g: tree, px: 212, py: H, phase: seed % 7 });
+    const branchLayer = el('g', {}, tree);
+    const trunkLayer = el('g', {}, tree);
 
     trunks.forEach((tr, ti) => {
       const p0 = { x: tr.bx, y: H + 20 }, c = { x: tr.cx, y: H * 0.5 }, p2 = { x: tr.tx, y: -60 };
@@ -64,17 +68,8 @@
       // Тень с одной стороны
       el('polygon', { points: poly(mid.concat(right.slice().reverse())), fill: '#cfc8b8', opacity: .55 }, trunkLayer);
 
-      // Тёмная кора у основания
-      const base = [];
-      for (let i = 0; i <= 8; i++) {
-        const t = i / 8 * 0.09 + r() * 0.02, p = bez(p0, c, p2, t);
-        base.push([p.x - width(t) / 2 + (i % 2 ? 2 : -1) * r() * 4, p.y]);
-      }
-      const baseR = base.map(([x, y]) => [x + 0, y]).reverse().map(([x, y], i) => {
-        const t = (8 - i) / 8 * 0.09, p = bez(p0, c, p2, t);
-        return [p.x + width(t) / 2 - r() * 6, y - r() * 10];
-      });
-      el('polygon', { points: poly(base.concat(baseR)), fill: '#2a2622', opacity: .7 }, trunkLayer);
+      // (тёмную кору у основания убрали; пропускаем её случайные числа, чтобы форма деревьев не изменилась)
+      for (let i = 0; i < 36; i++) r();
 
       // Чёрные чечевички — характерные полоски берёзы
       const marks = 34 + Math.floor(r() * 10);
@@ -127,7 +122,7 @@
     });
 
     // Крона — отдельные пучки листьев наверху
-    const crown = el('g', {}, svg);
+    const crown = el('g', {}, tree);
     for (let i = 0; i < 6; i++) {
       const lx = 60 + r() * 240, ly = 60 + r() * 260, size = 80 + r() * 70, h = size * LEAF_RATIO;
       const g = el('g', {}, crown);
@@ -154,6 +149,14 @@
     // порыв «ветра» от скорости прокрутки, плавно затухает
     gust += (Math.max(-40, Math.min(40, velocity)) - gust) * 0.08;
     const breeze = reduce ? 0 : Math.sin(time / 1800);
+
+    // Стволы гнутся от основания и ходят влево-вправо
+    for (const t of trees) {
+      const bend = 4 * Math.sin(y / 260 + t.phase) + gust * 0.18 + breeze * 1.2;
+      const shift = 10 * Math.sin(y / 340 + t.phase);
+      t.g.setAttribute('transform',
+        `translate(${(t.px + shift).toFixed(2)} ${t.py}) skewX(${bend.toFixed(2)}) translate(${-t.px} ${-t.py})`);
+    }
 
     for (const s of swayers) {
       const a = s.amp * Math.sin(y / 140 + s.phase) + gust * 0.25 * s.dir + breeze * 0.6;
